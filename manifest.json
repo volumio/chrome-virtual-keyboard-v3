@@ -72,7 +72,6 @@
     {
       "matches": ["<all_urls>"],
       "js": [
-        "wanakana.min.js",
         "script.js"
       ],
       "run_at": "document_end",
