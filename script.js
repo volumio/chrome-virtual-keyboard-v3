@@ -493,12 +493,15 @@ async function virtualKeyboard_kana_kanji_conversion(key) {
         return;
     } else {
         try {
-        const hiragana = wanakana.toHiragana(inputValue);
-        const katakana = wanakana.toKatakana(inputValue);
-        const results = [[inputValue, [hiragana, katakana]]];
-        await displayResults(results, key);
+            let response = await fetch(`https://www.google.com/transliterate?langpair=ja-Hira|ja&text=${encodeURIComponent(inputValue)}&num=20`);
+            if (!response.ok) {
+                throw new Error('No response from the server: ' + response.status);
+            }
+            let data = await response.json();
+            var results = data;
+            await displayResults(results, key);
         } catch (error) {
-        console.error('Error in conversion:', error);
+            console.error('Error in retrieving data from the request:', error);
         }
     }
 }
